@@ -1,0 +1,24 @@
+{
+  "name": "mcstatus",
+  "version": "1.0.0",
+  "description": "Minecraft Server Status Webpage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanlytang/mcstatus.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nathanlytang/mcstatus/issues"
+  },
+  "homepage": "https://github.com/nathanlytang/mcstatus#readme",
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.23.1"
+  },
+  "dependencies": {}
+}
