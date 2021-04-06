@@ -4,17 +4,18 @@ module.exports = {
         const query = require("./query")
         const ping = require("./ping")
 
-
         let tmp: Array<string> = id.split(":")
         let url: string = tmp[0];
         let port: string = tmp[1] || "25565";
 
+        // Ping the server
         try {
             let pinged = await ping.getPing(url, port);
 
-
+            // Initialize API JSON
             let api: statusAPI = {
                 status: "online",
+                online: true,
                 ping: true,
                 version: {
                     version: pinged.version.name,
@@ -24,6 +25,28 @@ module.exports = {
                     online: pinged.players.online,
                     max: pinged.players.max
                 },
+                host: {
+                    name: url,
+                    port: port
+                }
+            }
+
+            // Query the server
+            try {
+                let queried = await query.getQuery(url, port);
+                api.query = true;
+                api.players.list = queried.player_;
+                api.version.version = queried.version;
+                api.host.ip = queried.from.address;
+
+            } catch (err) {
+                // Get player list from ping method
+                api.players.list = [];
+                try {
+                    for (let i = 0; i < pinged.players.online; i++) {
+                        api.players.list.push(pinged.players.sample[i].name);
+                    }
+                } catch { }
             }
 
             // Add favicon data if exists
@@ -31,23 +54,19 @@ module.exports = {
                 api.favicon = pinged.favicon;
             }
 
-            try {
-                let queried = await query.getQuery(url, port);
-                api.query = true;
-            } catch {
-                console.log("Query not supported")
-            }
-
             return api;
         } catch {
             return this._offline();
         }
 
-
     },
 
-    _offline: function () {
-        let api: statusAPI = { status: "offline" }
+    /**
+     * Return offline status
+     * @returns {statusAPI} Offline status JSON
+     */
+    _offline: function (): statusAPI {
+        let api: statusAPI = { status: "offline", online: false }
         return api;
     }
 }
@@ -55,6 +74,7 @@ module.exports = {
 
 interface statusAPI {
     status: string;
+    online: boolean;
     version?: {
         version?: string;
         name?: string;
@@ -65,8 +85,11 @@ interface statusAPI {
         max: string;
         list?: Array<string>;
     };
-    hostport?: string;
-    hostip?: string;
+    host?: {
+        name: string;
+        port?: string;
+        ip?: string;
+    };
     favicon?: string;
     plugins?: Array<string>;
     ping?: boolean;
