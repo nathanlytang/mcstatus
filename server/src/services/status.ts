@@ -12,11 +12,30 @@ module.exports = {
         try {
             let pinged = await ping.getPing(url, port);
 
-            let api: statusAPI = { status: "online", version: { version: pinged.version.name, protocol: pinged.version.protocol }, players: { online: pinged.players.online, max: pinged.players.max }, }
+
+            let api: statusAPI = {
+                status: "online",
+                ping: true,
+                version: {
+                    version: pinged.version.name,
+                    protocol: pinged.version.protocol
+                },
+                players: {
+                    online: pinged.players.online,
+                    max: pinged.players.max
+                },
+            }
 
             // Add favicon data if exists
             if (pinged.favicon) {
                 api.favicon = pinged.favicon;
+            }
+
+            try {
+                let queried = await query.getQuery(url, port);
+                api.query = true;
+            } catch {
+                console.log("Query not supported")
             }
 
             return api;
@@ -50,4 +69,6 @@ interface statusAPI {
     hostip?: string;
     favicon?: string;
     plugins?: Array<string>;
+    ping?: boolean;
+    query?: boolean;
 }
