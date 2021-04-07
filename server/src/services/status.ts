@@ -1,5 +1,10 @@
 module.exports = {
 
+    /**
+     * Get status of server using ping method and query if available
+     * @param id Server IP and port to be pinged
+     * @returns JSON API
+     */
     getStatus: async function (id: string) {
         const query = require("./query")
         const ping = require("./ping")
@@ -33,6 +38,7 @@ module.exports = {
 
             // Query the server
             try {
+                // Get player list from query method
                 let queried = await query.getQuery(url, port);
                 api.query = true;
                 api.players.list = queried.player_;
@@ -40,13 +46,15 @@ module.exports = {
                 api.host.ip = queried.from.address;
 
             } catch (err) {
-                // Get player list from ping method
+                // Else get player list from ping method
                 api.players.list = [];
                 try {
                     for (let i = 0; i < pinged.players.online; i++) {
                         api.players.list.push(pinged.players.sample[i].name);
                     }
-                } catch { }
+                } catch {
+                    // Player list does not match online count
+                }
             }
 
             // Add favicon data if exists
@@ -71,7 +79,9 @@ module.exports = {
     }
 }
 
-
+/**
+ * The API returned after a query
+ */
 interface statusAPI {
     status: string;
     online: boolean;
