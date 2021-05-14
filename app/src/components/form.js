@@ -15,19 +15,23 @@ class InputForm extends Component {
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
+        if (this.state.value !== "") {
+            this.props.parentCallback(this.state.value);
+        }
         event.preventDefault();
     }
 
     render() {
-        const inputText = this.props.input;
+        const largeSubmitText = this.props.largeInput;
+        const smallSubmiText = this.props.smallInput
         const placeholderText = this.props.placeholder;
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    <input type="text" value={this.state.value} onChange={this.handleChange} placeholder={placeholderText} />
+                    <input type="text" value={this.state.value} onChange={this.handleChange} placeholder={placeholderText} autoFocus />
                 </label>
-                <input type="submit" value={inputText} />
+                <input className="largeSubmit" type="submit" value={largeSubmitText} />
+                <input className="smallSubmit" type="submit" value={smallSubmiText} />
             </form>
         );
     }
