@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import logo from "./logo.svg";
-import "./App.css";
+import "./App.scss";
 import InputForm from "./components/form";
 import ReturnStatus from "./components/returnStatus"
 
@@ -26,6 +26,9 @@ class App extends Component {
                 <ReturnStatus address={this.state.address} />
 
                 {/* <p className="App-intro">{this.state.apiResponse}</p> */}
+                <div className="footer">
+                    2021. Built by <a target="_blank" rel="noopener noreferrer" href="https://nathanlytang.com">Nathan Tang</a>.
+                </div>
             </div>
         );
     }
