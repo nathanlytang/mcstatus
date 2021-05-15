@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../App.css"
+import "../App.scss"
 import defaultfavicon from "../defaultserverfavicon.png"
 
 class ReturnStatus extends Component {
@@ -59,21 +59,59 @@ class ReturnStatus extends Component {
 
     }
 
+    hideLazyLoading() {
+        document.getElementById("lazy").style.display = "none";
+    }
+
+    playerListToString(list, length) {
+        let playerList = ""
+        for (var i = 0; i < length; i++) {
+            playerList += `${list[i]}, `
+        }
+        playerList = playerList.substring(0, playerList.length - 2);
+        return playerList
+    }
+
     statusJSX() {
+        console.log(this.state.players.list)
+        let playerList = this.playerListToString(this.state.players.list, this.state.players.online)
         return (
-            <div className="returnStat">{
-                this.state.fetched &&
-                <div>
-                    <img src={this.state.favicon} alt="favicon" />
-                    <h1>{this.state.status}</h1>
+            <div>
+                <div id="lazy">
+                    lazy
                 </div>
-            }
+                {this.state.fetched && this.state.online &&
+                    <div className="returnStat">
+                        <div>
+                            <img className="favicon" src={this.state.favicon} alt="favicon" />
+                            <span style={{ color: 'greenyellow' }} id="dot">•</span>
+                            <h1 className="status">Online</h1>
+                        </div>
+                        <p className="info"><strong>Version:</strong> {this.state.version.version}</p>
+                        <p className="info"><strong>Players:</strong> {this.state.players.online}/{this.state.players.max}</p>
+                        {this.state.players.list.length > 0 &&
+                            <div>
+                                <p className="info"><strong>List:</strong> {playerList}</p>
+                            </div>
+                        }
+                        {this.hideLazyLoading()}
+                    </div>
+                }
+                {this.state.fetched && !this.state.online &&
+                    <div className="returnStat">
+                        <div>
+                            <img className="favicon" src={this.state.favicon} alt="favicon" />
+                            <span style={{ color: 'red' }} id="dot">•</span>
+                            <h1 className="status">Offline</h1>
+                        </div>
+                        {this.hideLazyLoading()}
+                    </div>
+                }
             </div>
         );
     }
 
     render() {
-        console.log(this.state.favicon)
         if (this.props.address !== "") {
             return this.statusJSX()
         } else {
