@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../App.scss"
 import defaultfavicon from "../defaultserverfavicon.png"
+import Info from "./info"
 
 class ReturnStatus extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class ReturnStatus extends Component {
 
     callServer() {
         if (this.props.address !== "") {
-            fetch(`http://localhost:9000/server/${this.props.address}`)
+            fetch(`http://192.168.1.100:9000/server/${this.props.address}`)
                 .then(res => res.json())
                 .then(res => {
                     let favicon;
@@ -51,25 +52,40 @@ class ReturnStatus extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.address !== prevProps.address) {
-            this.callServer()
+            this.callServer();
         }
     }
 
     lazyLoading() {
-
+        return (
+            <div id="placeholder">
+                <div className="returnStat placeholder pulse">
+                    <div className="gridBox2">
+                        <div id="left">
+                            <span className="favicon lazyFavicon"></span>
+                        </div>
+                        <div id="middle">
+                                <span className="status lazyStatus" id="dot"></span>
+                        </div>
+                        <div id="right">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     hideLazyLoading() {
-        document.getElementById("lazy").style.display = "none";
+        document.getElementById("placeholder").style.display = "none";
     }
 
     playerListToString(list, length) {
-        let playerList = ""
+        let playerList = "";
         for (var i = 0; i < length; i++) {
             playerList += `${list[i]}, `
-        }
+        };
         playerList = playerList.substring(0, playerList.length - 2);
-        return playerList
+        return playerList;
     }
 
     statusJSX() {
@@ -77,32 +93,54 @@ class ReturnStatus extends Component {
         let playerList = this.playerListToString(this.state.players.list, this.state.players.online)
         return (
             <div>
-                <div id="lazy">
-                    lazy
-                </div>
+                {this.lazyLoading()}
                 {this.state.fetched && this.state.online &&
                     <div className="returnStat">
-                        <div>
-                            <img className="favicon" src={this.state.favicon} alt="favicon" />
-                            <span style={{ color: 'greenyellow' }} id="dot">•</span>
-                            <h1 className="status">Online</h1>
-                        </div>
-                        <p className="info"><strong>Version:</strong> {this.state.version.version}</p>
-                        <p className="info"><strong>Players:</strong> {this.state.players.online}/{this.state.players.max}</p>
-                        {this.state.players.list.length > 0 &&
-                            <div>
-                                <p className="info"><strong>List:</strong> {playerList}</p>
+                        <div className="gridBox">
+                            <div id="topRow" className="gridBox2">
+                                <div id="left">
+                                    <img className="favicon" src={this.state.favicon} alt="favicon" />
+                                </div>
+                                <div id="middle">
+                                    <span style={{ color: 'greenyellow' }} id="dot">•</span>
+                                    <h1 className="status">Online</h1>
+                                </div>
+                                <div id="right">
+                                </div>
                             </div>
-                        }
+                            <div id="leftHalf">
+                                <Info keys={"Version"} value={this.state.version.version} />
+                                <Info keys={"Players"} value={this.state.players.online + "/" + this.state.players.max} />
+                                {this.state.players.list.length > 0 &&
+                                    <div>
+                                        <Info keys={"List"} value={playerList} />
+                                    </div>
+                                }
+                            </div>
+                            <div id="rightHalf">
+                                <Info keys={"Hostname"} value={this.state.host.name} />
+                                <Info keys={"Port"} value={this.state.host.port} />
+                                <Info keys={"IP"} value={this.state.host.ip} />
+                            </div>
+                            <div id="bottomRow">
+                                Technical info
+                            </div>
+                        </div>
                         {this.hideLazyLoading()}
                     </div>
                 }
                 {this.state.fetched && !this.state.online &&
                     <div className="returnStat">
-                        <div>
-                            <img className="favicon" src={this.state.favicon} alt="favicon" />
-                            <span style={{ color: 'red' }} id="dot">•</span>
-                            <h1 className="status">Offline</h1>
+                        <div className="gridBox2">
+                            <div id="left">
+                                <img className="favicon" src={this.state.favicon} alt="favicon" />
+                            </div>
+                            <div id="middle">
+                                <span style={{ color: 'red' }} id="dot">•</span>
+                                <h1 className="status">Offline</h1>
+                            </div>
+                            <div id="right">
+                            </div>
                         </div>
                         {this.hideLazyLoading()}
                     </div>
