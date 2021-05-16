@@ -21,8 +21,10 @@ class App extends Component {
                     {/* <img src={logo} className="App-logo" alt="logo" /> */}
                     <h1 className="App-title">Server Status</h1>
                 </header>
-
-                <InputForm largeInput={"Get Status"} smallInput={"→"} placeholder={"Server address"} parentCallback={this.getAddress} />
+                <div id="description">
+                    Minecraft Server Status Page
+                </div>
+                <InputForm largeInput={"Get Status"} smallInput={"→"} placeholder={"exampleserver.com / 123.123.123.123:25565"} parentCallback={this.getAddress} />
                 <ReturnStatus address={this.state.address} />
 
                 {/* <p className="App-intro">{this.state.apiResponse}</p> */}
