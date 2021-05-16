@@ -22,6 +22,7 @@ module.exports = {
                 status: "online",
                 online: true,
                 ping: true,
+                query: false,
                 version: {
                     version: pinged.version.name,
                     protocol: pinged.version.protocol
