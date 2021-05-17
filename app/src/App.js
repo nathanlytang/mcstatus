@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
+import block from "./block.png"
 import "./App.scss";
 import InputForm from "./components/form";
 import ReturnStatus from "./components/returnStatus"
@@ -18,8 +18,7 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    {/* <img src={logo} className="App-logo" alt="logo" /> */}
-                    <h1 className="App-title">Server Status</h1>
+                    <h1 className="App-title"><img id="block" src={block} alt="block" />Server Status</h1>
                 </header>
                 <div id="description">
                     Minecraft Server Status Page
@@ -27,7 +26,6 @@ class App extends Component {
                 <InputForm largeInput={"Get Status"} smallInput={"→"} placeholder={"exampleserver.com / 123.123.123.123:25565"} parentCallback={this.getAddress} />
                 <ReturnStatus address={this.state.address} />
 
-                {/* <p className="App-intro">{this.state.apiResponse}</p> */}
                 <div className="footer">
                     2021. Built by <a target="_blank" rel="noopener noreferrer" href="https://nathanlytang.com">Nathan Tang</a>.
                 </div>

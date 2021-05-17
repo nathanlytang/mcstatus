@@ -4,6 +4,8 @@ $accent: #f1f1f1;
 $button_highlight: #555;
 $border: #ccc;
 
+@import url(https://fonts.googleapis.com/css2?family=DM+Mono&family=Montserrat&family=Roboto+Slab:wght@300;400&display=swap);
+
 body {
   background-color: $bg;
   color: $text;
@@ -137,6 +139,14 @@ p {
   width: 80%;
   margin: 50px auto;
   text-align: center;
+}
+
+#block {
+  position: relative;
+  height: calc(50px + 2vmin);
+  bottom: 5px;
+  margin-right: 1vw;
+  vertical-align: middle;
 }
 
 #description {
