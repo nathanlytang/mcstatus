@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../App.scss"
 import defaultfavicon from "../defaultserverfavicon.png"
 import Info from "./info"
+import Collapsible from "./collapse"
 
 class ReturnStatus extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class ReturnStatus extends Component {
             version: {},
             players: {},
             host: {},
-            query: "",
+            ping: false,
+            query: false,
             favicon: defaultfavicon,
             fetched: false,
         };
@@ -24,8 +26,9 @@ class ReturnStatus extends Component {
             fetch(`http://192.168.1.100:9000/server/${this.props.address}`)
                 .then(res => res.json())
                 .then(res => {
-                    let favicon;
-                    res.favicon ? favicon = res.favicon : favicon = defaultfavicon;
+                    let favicon = res.favicon ? res.favicon : defaultfavicon;
+                    let ping = res.ping ? "True" : "False";
+                    let query = res.query ? "True" : "False";
                     if (res.online === true) {
                         this.setState({
                             status: res.status,
@@ -33,7 +36,8 @@ class ReturnStatus extends Component {
                             version: res.version,
                             players: res.players,
                             host: res.host,
-                            query: res.query,
+                            query: query,
+                            ping: ping,
                             favicon: favicon,
                             fetched: true,
                         });
@@ -52,6 +56,7 @@ class ReturnStatus extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.address !== prevProps.address) {
+            this.setState({ fetched: false });
             this.callServer();
         }
     }
@@ -65,7 +70,7 @@ class ReturnStatus extends Component {
                             <span className="favicon lazyFavicon"></span>
                         </div>
                         <div id="middle">
-                                <span className="status lazyStatus" id="dot"></span>
+                            <span className="status lazyStatus" id="dot"></span>
                         </div>
                         <div id="right">
                         </div>
@@ -73,10 +78,6 @@ class ReturnStatus extends Component {
                 </div>
             </div>
         );
-    }
-
-    hideLazyLoading() {
-        document.getElementById("placeholder").style.display = "none";
     }
 
     playerListToString(list, length) {
@@ -89,11 +90,10 @@ class ReturnStatus extends Component {
     }
 
     statusJSX() {
-        console.log(this.state.players.list)
         let playerList = this.playerListToString(this.state.players.list, this.state.players.online)
         return (
             <div>
-                {this.lazyLoading()}
+                {!this.state.fetched && this.lazyLoading()}
                 {this.state.fetched && this.state.online &&
                     <div className="returnStat">
                         <div className="gridBox">
@@ -123,10 +123,13 @@ class ReturnStatus extends Component {
                                 <Info keys={"IP"} value={this.state.host.ip} />
                             </div>
                             <div id="bottomRow">
-                                Technical info
+                                <Collapsible title={"Technical info"} openButton={"▼"} closeButton={"▲"} buttonPosition={"left"}>
+                                    <Info keys={"Protocol"} value={this.state.version.protocol} />
+                                    <Info keys={"Ping"} value={this.state.ping} />
+                                    <Info keys={"Query"} value={this.state.query} />
+                                </Collapsible>
                             </div>
                         </div>
-                        {this.hideLazyLoading()}
                     </div>
                 }
                 {this.state.fetched && !this.state.online &&
@@ -142,7 +145,6 @@ class ReturnStatus extends Component {
                             <div id="right">
                             </div>
                         </div>
-                        {this.hideLazyLoading()}
                     </div>
                 }
             </div>
