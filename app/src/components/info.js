@@ -14,7 +14,14 @@ class Info extends Component {
             return null;
         } else {
             return (
-                <p className="info"><strong>{key}:</strong> {value}</p>
+                <p className="info">
+                    <span className="keys">
+                        <strong>{key}: </strong>
+                    </span>
+                    <span className="value">
+                        {value}
+                    </span>
+                </p>
             );
         }
     }
