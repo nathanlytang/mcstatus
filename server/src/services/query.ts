@@ -21,7 +21,7 @@ module.exports = {
                         this._close(query);
                         reject(err);
                     })
-            } catch (err: any) {
+            } catch (err) {
                 this._close(query);
                 reject(err);
             }
