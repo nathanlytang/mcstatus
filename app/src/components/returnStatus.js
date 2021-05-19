@@ -23,7 +23,7 @@ class ReturnStatus extends Component {
 
     callServer() {
         if (this.props.address !== "") {
-            fetch(`http://192.168.1.100:9000/server/${this.props.address}`)
+            fetch(`http://${process.env.REACT_APP_API_ADDRESS}/server/${this.props.address}`)
                 .then(res => res.json())
                 .then(res => {
                     let favicon = res.favicon ? res.favicon : defaultfavicon;

@@ -365,17 +365,3 @@ a:visited {
   bottom: 0.1em;
   filter: drop-shadow(1px 1px 1px black)
 }
-
-.collapsible .description {
-  max-height: 100px;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out;
-}
-
-.animate {
-  transition: height 0.2s ease-in-out;
-}
-
-.animate.grow {
-  transform: scale(1.5);
-}

@@ -45,7 +45,7 @@ class Collapsible extends Component {
                 <button className="active" onClick={this.toggle}>
                     {this.titlePosition(title, openButton, closeButton, position)}
                 </button>
-                <div className="description animate animate.grow">
+                <div className="description">
                     {this.state.open &&
                         <div>
                             {this.props.children}
