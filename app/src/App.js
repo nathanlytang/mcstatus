@@ -17,6 +17,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+                <meta name="theme-color" content="#fff" />
                 <header className="App-header">
                     <h1 className="App-title"><img id="block" src={block} alt="block" />Server Status</h1>
                 </header>
