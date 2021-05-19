@@ -123,7 +123,7 @@ class ReturnStatus extends Component {
                                 <Info keys={"IP"} value={this.state.host.ip} />
                             </div>
                             <div id="bottomRow">
-                                <Collapsible title={"Technical info"} openButton={"▼"} closeButton={"▲"} buttonPosition={"left"}>
+                                <Collapsible title={"Technical info"} closeButton={"▼"} openButton={"▲"} buttonPosition={"left"}>
                                     <Info keys={"Protocol"} value={this.state.version.protocol} />
                                     <Info keys={"Ping"} value={this.state.ping} />
                                     <Info keys={"Query"} value={this.state.query} />
