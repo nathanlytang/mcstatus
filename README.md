@@ -17,7 +17,7 @@ PORT=9000 # Choose a port number
 
 In the /app folder, create a `.env` file with the following contents:
 ```dosini
-REACT_APP_API_ADDRESS=http://192.168.1.1:9000 # Change your ip address and port to match the server
+REACT_APP_API_ADDRESS=http://localhost:9000 # Change your ip address and port to match the server
 ```
 
 
