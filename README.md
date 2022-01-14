@@ -5,7 +5,7 @@ Minecraft Server Status Webpage
 ```bash
 npm install
 cd app
-yarn build
+npm run build
 cd ../server
 npm run build
 ```
