@@ -3,10 +3,11 @@ Minecraft Server Status Webpage
 
 ## Installation
 ```bash
-npm install
 cd app
+npm install
 npm run build
 cd ../server
+npm install
 npm run build
 ```
 
