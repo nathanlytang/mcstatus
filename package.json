@@ -17,8 +17,7 @@
   },
   "homepage": "https://github.com/nathanlytang/mcstatus#readme",
   "devDependencies": {
-    "eslint": "^7.23.0",
-    "eslint-plugin-react": "^7.23.1"
-  },
-  "dependencies": {}
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.30.1"
+  }
 }
